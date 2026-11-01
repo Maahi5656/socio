@@ -13,6 +13,6 @@ const Banner = () => {
             </div>
         </section>
     );
-};
+}; 
 
 export default Banner;
