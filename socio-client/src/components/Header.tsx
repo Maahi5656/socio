@@ -20,10 +20,6 @@ const Header = () => {
 
     console.log(user);
 
-    const handleSignOut=()=>{
-        authClient.signOut();    
-    }
-
     return (
         <header className="fixed top-0 z-50 bg-[#FDFDFD] border-b border-border w-full">
             <nav className="relative max-w-7xl mx-auto py-3.5 flex justify-between items-center">
