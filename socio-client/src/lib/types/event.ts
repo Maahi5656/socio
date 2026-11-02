@@ -5,5 +5,6 @@ export interface IEvent {
     event_location: string,
     event_type: string,
     event_date: string,
-    event_description: string    
+    event_description: string,
+    event_organizer_email: string    
 }

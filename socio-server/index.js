@@ -1,5 +1,5 @@
-import { MongoClient } from 'mongodb';
-import express from 'express'
+import { MongoClient, ObjectId } from 'mongodb';
+import express, { response } from 'express'
 import cors from 'cors'
 import 'dotenv/config'
 
@@ -26,9 +26,25 @@ const mongoClient = await connectToMongoDB();
 const db = mongoClient.db("socio");
 const eventsCollection = db.collection("events");
 
-app.get('/', (req,res)=>{
-    res.send({message: 'Server is running fine!'})
-})
+app.get('/', (request,response)=>{
+    response.send({message: 'Server is running fine!'})
+});
+
+app.get('/event/', async(request, response)=>{
+    // const { email } = request.params
+    const result = await eventsCollection.find().toArray();
+    
+    response.send(result);
+});
+
+app.get('event/:id', async(request, response)=>{
+    const { id } = request.params;
+    const result = await eventsCollection.findOne({_id: new ObjectId(id)});
+
+    console.log(result);
+
+    result.send(result);
+});
 
 app.post('/add-event', async(request, response)=>{
     const data = request.body;
@@ -37,7 +53,7 @@ app.post('/add-event', async(request, response)=>{
     console.log(result);
 
     response.send(result);
-})
+});
 
 app.listen(PORT,()=>{
     console.log(`Server is running at port: ${PORT}`)

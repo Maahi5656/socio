@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -8,7 +10,15 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-const Events = () => {
+import { IEvent } from '@/lib/types/event'
+
+const Events = async() => {
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/event`, {
+        cache: 'no-cache'
+    })
+    const events: IEvent[] = await response.json();
+
     return (
         <>
             <section className='relative top-[76px] py-[50px] bg-cover bg-center bg-no-repeat' style={{ backgroundImage: "url('/images/section-banner.png')" }}>
@@ -20,7 +30,30 @@ const Events = () => {
             <section className='relative top-[76px] py-[45px]'>
                 <div className='relative max-w-7xl mx-auto'>
                     <div className='flex flex-row gap-3.5'>
-                        <Card className="relative mx-auto w-full max-w-full pt-0">
+                        {
+                            events ? events.map((event)=>{
+                                return (
+                                    <Card key={event._id} className="relative mx-auto w-full max-w-full pt-0">
+                                      <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
+                                        <img src={event.event_image} alt={event.event_title} className="relative z-20 aspect-video w-full object-cover brightness-60 grayscale dark:brightness-40"/>
+                                        <CardHeader>
+                                            <CardTitle>{ event.event_title }</CardTitle>
+                                            <CardDescription>
+                                              {
+                                                event.event_description
+                                              }
+                                            </CardDescription>
+                                            <CardDescription>
+                                                <Button className="w-full">View Event</Button>
+                                            </CardDescription>
+                                        </CardHeader>
+                                    </Card>                                     
+                                )
+                            })  : <>
+                                <p>No Events Found</p>
+                            </>
+                        }
+                        {/* <Card className="relative mx-auto w-full max-w-full pt-0">
                           <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
                             <img src="https://avatar.vercel.sh/shadcn1" alt="Event cover" className="relative z-20 aspect-video w-full object-cover brightness-60 grayscale dark:brightness-40"/>
                             <CardHeader>
@@ -33,8 +66,8 @@ const Events = () => {
                                     <Button className="w-full">View Event</Button>
                                 </CardDescription>
                             </CardHeader>
-                        </Card>    
-                        <Card className="relative mx-auto w-full max-w-full pt-0">
+                        </Card>     */}
+                        {/* <Card className="relative mx-auto w-full max-w-full pt-0">
                           <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
                             <img src="https://avatar.vercel.sh/shadcn1" alt="Event cover" className="relative z-20 aspect-video w-full object-cover brightness-60 grayscale dark:brightness-40"/>
                             <CardHeader>
@@ -47,8 +80,8 @@ const Events = () => {
                                     <Button className="w-full">View Event</Button>
                                 </CardDescription>
                             </CardHeader>
-                        </Card>
-                        <Card className="relative mx-auto w-full max-w-full pt-0">
+                        </Card> */}
+                        {/* <Card className="relative mx-auto w-full max-w-full pt-0">
                           <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
                             <img src="https://avatar.vercel.sh/shadcn1" alt="Event cover" className="relative z-20 aspect-video w-full object-cover brightness-60 grayscale dark:brightness-40"/>
                             <CardHeader>
@@ -61,7 +94,7 @@ const Events = () => {
                                     <Button className="w-full">View Event</Button>
                                 </CardDescription>
                             </CardHeader>
-                        </Card>                   
+                        </Card>                    */}
                     </div>
                 </div>
             </section>        
