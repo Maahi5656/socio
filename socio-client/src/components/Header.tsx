@@ -2,11 +2,19 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { authClient } from "@/lib/auth-client";
 
 import logo from '../../public/images/logo.png'
 
 
 const Header = () => {
+
+    const { data: session } = authClient.useSession();
+
+    const user = session?.user;
+
+    console.log(user);
+
     return (
         <header className="fixed top-0 z-50 bg-[#FDFDFD] border-b border-border w-full">
             <nav className="relative max-w-7xl mx-auto py-3.5 flex justify-between items-center">
@@ -22,10 +30,25 @@ const Header = () => {
                         <li className="mx-1.5"><Link className="font-bold text-[#798384] text-[16px] line-height-1.25" href="/">Home</Link></li>
                         <li className="mx-1.5"><Link className="font-bold text-[#798384] text-[16px] line-height-1.25" href="">About Us</Link></li>
                         <li className="mx-1.5"><Link className="font-bold text-[#798384] text-[16px] line-height-1.25" href="/events">Upcoming Events</Link></li>
-                        <li className="mx-1.5"><Link className="font-bold text-[#798384] text-[16px] line-height-1.25" href="/create-event">Create Event</Link></li>
-                        <li className="mx-1.5"><Link className="font-bold text-[#798384] text-[16px] line-height-1.25" href="/login">Login</Link></li>
-                        <li className="mx-1.5"><Link className="font-bold text-[#798384] text-[16px] line-height-1.25" href="/register">Signup</Link></li>
-                        <li className="mx-1.5"><Link className="font-bold text-[#798384] text-[16px] line-height-1.25" href="">Profile</Link></li>
+                        {
+                            user ? ( <li className="mx-1.5"><Link className="font-bold text-[#798384] text-[16px] line-height-1.25" href="/create-event">Create Event</Link></li> ) : ""
+                        }
+                        {
+                            !user ? (
+                                <>
+                                    <li className="mx-1.5"><Link className="font-bold text-[#798384] text-[16px] line-height-1.25" href="/login">Login</Link></li>
+                                    <li className="mx-1.5"><Link className="font-bold text-[#798384] text-[16px] line-height-1.25" href="/register">Signup</Link></li>                                
+                                </>
+                            ) : ""
+                        }
+                        {
+                            user ? (
+                                <>
+                                    <li className="mx-1.5"><Link className="font-bold text-[#798384] text-[16px] line-height-1.25" href="">Profile</Link></li>
+                                </> 
+                            ) : ""
+                        }
+                        
                     </ul>
                 </div>
             </nav>
