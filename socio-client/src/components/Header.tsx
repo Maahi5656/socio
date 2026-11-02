@@ -4,8 +4,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { authClient } from "@/lib/auth-client";
 
-import logo from '../../public/images/logo.png'
+import { Popover, PopoverContent, PopoverDescription, PopoverHeader, PopoverTitle, PopoverTrigger } from "@/components/ui/popover"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
 
+import NavButtons from "./NavbarButtons";
+
+import logo from '../../public/images/logo.png'
 
 const Header = () => {
 
@@ -14,6 +19,10 @@ const Header = () => {
     const user = session?.user;
 
     console.log(user);
+
+    const handleSignOut=()=>{
+        authClient.signOut();    
+    }
 
     return (
         <header className="fixed top-0 z-50 bg-[#FDFDFD] border-b border-border w-full">
@@ -31,24 +40,15 @@ const Header = () => {
                         <li className="mx-1.5"><Link className="font-bold text-[#798384] text-[16px] line-height-1.25" href="">About Us</Link></li>
                         <li className="mx-1.5"><Link className="font-bold text-[#798384] text-[16px] line-height-1.25" href="/events">Upcoming Events</Link></li>
                         {
-                            user ? ( <li className="mx-1.5"><Link className="font-bold text-[#798384] text-[16px] line-height-1.25" href="/create-event">Create Event</Link></li> ) : ""
-                        }
-                        {
-                            !user ? (
+                            user ? (
+                                <NavButtons />                           
+                            ) : (
                                 <>
                                     <li className="mx-1.5"><Link className="font-bold text-[#798384] text-[16px] line-height-1.25" href="/login">Login</Link></li>
                                     <li className="mx-1.5"><Link className="font-bold text-[#798384] text-[16px] line-height-1.25" href="/register">Signup</Link></li>                                
                                 </>
-                            ) : ""
+                            )
                         }
-                        {
-                            user ? (
-                                <>
-                                    <li className="mx-1.5"><Link className="font-bold text-[#798384] text-[16px] line-height-1.25" href="">Profile</Link></li>
-                                </> 
-                            ) : ""
-                        }
-                        
                     </ul>
                 </div>
             </nav>

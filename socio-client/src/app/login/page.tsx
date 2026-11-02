@@ -1,4 +1,4 @@
-import Image from "next/image";
+"use client"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -16,37 +16,60 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { toast } from "@/components/ui/toast"
 
+import Image from "next/image";
 import Link from "next/link";
+
+
+import { redirect } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 
 import login from '../../../public/images/login-image.png'
 
 const Login = () => {
+
+    const handleLoginForm=async(e:React.SubmitEvent<HTMLElement>)=>{
+      e.preventDefault();
+
+      const formData = new FormData(e.target);
+      const user = Object.fromEntries(formData.entries()) as {email:string, password:string};
+      
+      // console.log(user);
+      const { data, error } = await authClient.signIn.email({
+        ...user
+      });
+
+      if(data){
+        redirect('/')
+      }
+
+      if(error){
+        toast.add({
+          type: "error",
+          description: `${error}`,
+          priority: "high"
+        })
+      }
+    
+    }
+
     return (
         <section className='relative h-[calc(100vh-192px)] top-[76px] py-[50px]'>
             <div className='relative flex justify-start items-start gap-5 max-w-7xl mx-auto'>
                 <Image className="w-full rounded" width={450} src={login} alt="image" />
                 <div className="w-full">
-                    <form className="max-w-sm">
+                    <form onSubmit={handleLoginForm} className="max-w-sm">
                        <h2 className="font-bold text-2xl text-[#636467] mb-1.5">Login To Your Account</h2> 
                         <FieldGroup>
-                            {/* <Field>
-                              <FieldLabel htmlFor="form-name">Name</FieldLabel>
-                              <Input
-                                id="form-name"
-                                type="text"
-                                placeholder="Evil Rabbit"
-                                required
-                              />
-                            </Field> */}
                             <Field>
                               <FieldLabel htmlFor="form-email">Email</FieldLabel>
-                              <Input id="form-email" type="email" placeholder="john@example.com" />
+                              <Input id="form-email" type="email" name="email" placeholder="john@example.com" required/>
                             </Field>
                             <div>
                               <Field>
                                 <FieldLabel htmlFor="form-password">Password</FieldLabel>
-                                <Input id="form-password" type="password" />
+                                <Input id="form-password" name="password" type="password" required/>
                               </Field>
                             </div>
                             <Field orientation="horizontal">
