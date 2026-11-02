@@ -22,7 +22,7 @@ const Header = () => {
                         <li className="mx-1.5"><Link className="font-bold text-[#798384] text-[16px] line-height-1.25" href="/">Home</Link></li>
                         <li className="mx-1.5"><Link className="font-bold text-[#798384] text-[16px] line-height-1.25" href="">About Us</Link></li>
                         <li className="mx-1.5"><Link className="font-bold text-[#798384] text-[16px] line-height-1.25" href="/events">Upcoming Events</Link></li>
-                        <li className="mx-1.5"><Link className="font-bold text-[#798384] text-[16px] line-height-1.25" href="">Create Event</Link></li>
+                        <li className="mx-1.5"><Link className="font-bold text-[#798384] text-[16px] line-height-1.25" href="/create-event">Create Event</Link></li>
                         <li className="mx-1.5"><Link className="font-bold text-[#798384] text-[16px] line-height-1.25" href="/login">Login</Link></li>
                         <li className="mx-1.5"><Link className="font-bold text-[#798384] text-[16px] line-height-1.25" href="/register">Signup</Link></li>
                         <li className="mx-1.5"><Link className="font-bold text-[#798384] text-[16px] line-height-1.25" href="">Profile</Link></li>

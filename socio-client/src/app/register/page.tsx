@@ -35,7 +35,7 @@ const Register = () => {
                               <Input
                                 id="form-name"
                                 type="text"
-                                placeholder="Evil Rabbit"
+                                placeholder="Full Name"
                                 required
                               />
                             </Field>
