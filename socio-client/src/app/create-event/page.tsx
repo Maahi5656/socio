@@ -33,20 +33,57 @@ import {
 
 import { Textarea } from "@/components/ui/textarea"
 
+import { IEvent } from '@/lib/types/event'
+
 import login from '../../../public/images/login-image.png'
 
 const items = [
-  { label: "Select a fruit", value: null },
-  { label: "Apple", value: "apple" },
-  { label: "Banana", value: "banana" },
-  { label: "Blueberry", value: "blueberry" },
-  { label: "Grapes", value: "grapes" },
-  { label: "Pineapple", value: "pineapple" },
-]
+//   { label: "Select a fruit", value: null },
+    { label: "Plantation", value: "Plantation" },
+    { label: "Donation", value: "Donation" },
+    { label: "Healthcare", value: "Healthcare" },
+    { label: "Food", value: "Food" },
+    { label: "Education", value: "Education" },
+    { label: "Cleanup", value: "Cleanup" },
+    { label: "Support", value: "Support" },
+];
+
+const initialFormData = {
+    event_image: "",
+    event_title: "",
+    event_location: "",
+    event_type: "",
+    event_date: "",
+    event_description: ""
+}
 
 const CreateEvent = () => {
 
-    const [date, setDate] = useState<Date>()
+    const [date, setDate] = useState<Date>();
+    const [form, setForm] = useState(initialFormData);
+
+    const update=(field: keyof typeof form, value: string | null)=>{
+        setForm((current)=>({
+            ...current,
+            [field]:value
+        }));
+    }
+
+    const handleSubmitForm=async(e: React.SubmitEvent<HTMLFormElement>)=>{
+        e.preventDefault();
+
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/add-event`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(form)
+        });
+
+        const result = response.json();
+
+        console.log(result);
+    }
 
     return (
         <section className='relative h-[calc(100vh-192px)] top-[76px] py-[50px]'>
@@ -56,7 +93,7 @@ const CreateEvent = () => {
                     <h2 className="font-bold text-2xl text-[#636467] mb-0.5">Create A New Event</h2>
                     <p className="font-medium text-[#636467] text-[14px] mb-0.5">Share An Event To Help Our Community</p> 
                     <br />
-                    <form className="max-w-sm">
+                    <form onSubmit={handleSubmitForm} className="max-w-sm">
                         <FieldGroup>
                             <div className="grid grid-cols-2 gap-4">
                                 <Field>
@@ -64,6 +101,8 @@ const CreateEvent = () => {
                                     <Input
                                       id="form-event-name"
                                       type="text"
+                                      value={form.event_title}
+                                      onChange={(e)=>update("event_title", e.target.value)}
                                       placeholder="Enter Your Event Title..."
                                       required
                                     />
@@ -73,6 +112,8 @@ const CreateEvent = () => {
                                     <Input
                                       id="form-event-location"
                                       type="text"
+                                      value={form.event_location}
+                                      onChange={(e)=>update("event_location", e.target.value)}
                                       placeholder="Enter Location Of The Event..."
                                       required
                                     />
@@ -81,7 +122,11 @@ const CreateEvent = () => {
                             <div className="grid grid-cols-3 gap-4">
                                 <Field>
                                     <FieldLabel htmlFor="form-event-type">Event Type</FieldLabel>
-                                    <Select items={items}>
+                                    <Select 
+                                        items={items} 
+                                        value={form.event_type}
+                                        onValueChange={(value)=>update("event_type", value)}
+                                    >
                                         <SelectTrigger className="w-full max-w-full">
                                           <SelectValue />
                                         </SelectTrigger>
@@ -102,6 +147,8 @@ const CreateEvent = () => {
                                     <Input
                                       id="form-image-url"
                                       type="url"
+                                      value={form.event_image}
+                                      onChange={(e)=>update("event_image", e.target.value)}
                                       placeholder="Enter URL of the image"
                                       required
                                     />
@@ -113,8 +160,8 @@ const CreateEvent = () => {
                                       <PopoverContent className="w-auto p-0" align="start">
                                         <Calendar
                                           mode="single"
-                                          selected={date}
-                                          onSelect={setDate}
+                                          selected={form.event_date ? new Date(form.event_date) : undefined}
+                                          onSelect={(date)=>update("event_date", date ? date.toISOString() : "")}
                                           defaultMonth={date}
                                         />
                                       </PopoverContent>
@@ -123,7 +170,7 @@ const CreateEvent = () => {
                             </div>
                             <div className="grid grid-cols-1">
                                 <FieldLabel htmlFor="textarea-message">Event Description</FieldLabel>
-                                <Textarea id="textarea-message" placeholder="Type your message here." />
+                                <Textarea id="textarea-message" value={form.event_description} onChange={(e)=>update("event_description", e.target.value)} placeholder="Type your message here." />
                             </div>
                             <div className="grid grid-cols-1">
                                 <Button className="w-full" type="submit">Create Event</Button>

@@ -30,6 +30,15 @@ app.get('/', (req,res)=>{
     res.send({message: 'Server is running fine!'})
 })
 
+app.post('/add-event', async(request, response)=>{
+    const data = request.body;
+    const result = await eventsCollection.insertOne(data);  
+
+    console.log(result);
+
+    response.send(result);
+})
+
 app.listen(PORT,()=>{
     console.log(`Server is running at port: ${PORT}`)
 })
