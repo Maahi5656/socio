@@ -41,9 +41,9 @@ const EventBookingForm = ({event}:{event: IEvent}) => {
         
         if(eventBookingData){
             toast.add({
-              type: "success",
-              description: "You have successfully joined the event",
-              priority: "high"
+                type: "success",
+                description: "You have successfully joined the event",
+                priority: "high"
             })
         }
     }

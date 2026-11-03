@@ -47,6 +47,20 @@ app.get('/events/:id', async(request, response)=>{
     response.send(result);
 });
 
+app.patch('/event/:id', async(request, response)=>{
+    const {id} = request.params;   
+    const updatedData = request.body;
+    const result = await eventsCollection.updateOne(
+        {_id: new ObjectId(id)},
+        {$set: updatedData}
+    )
+    
+    response.json({
+        message: "Event Updated Successfully",
+        result
+    });
+})
+
 app.post('/add-event', async(request, response)=>{
     const data = request.body;
     const result = await eventsCollection.insertOne(data);  
