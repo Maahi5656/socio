@@ -25,25 +25,26 @@ export async function connectToMongoDB(){
 const mongoClient = await connectToMongoDB();
 const db = mongoClient.db("socio");
 const eventsCollection = db.collection("events");
+const eventBookingCollection = db.collection("bookings");
 
 app.get('/', (request,response)=>{
     response.send({message: 'Server is running fine!'})
 });
 
-app.get('/event/', async(request, response)=>{
+app.get('/events/', async(request, response)=>{
     // const { email } = request.params
     const result = await eventsCollection.find().toArray();
     
     response.send(result);
 });
 
-app.get('event/:id', async(request, response)=>{
+app.get('/events/:id', async(request, response)=>{
     const { id } = request.params;
     const result = await eventsCollection.findOne({_id: new ObjectId(id)});
 
     console.log(result);
 
-    result.send(result);
+    response.send(result);
 });
 
 app.post('/add-event', async(request, response)=>{
@@ -58,6 +59,20 @@ app.post('/add-event', async(request, response)=>{
 app.get('/manage-event/:email', async(request, response)=>{
     const { email } = request.params;
     const result = await eventsCollection.find({event_organizer_email: email}).toArray();
+
+    response.send(result);
+});
+
+app.post('/join-event', async(request, response)=>{
+    const data = request.body;
+    const result = await eventBookingCollection.insertOne(data);
+
+    response.send(result);
+});
+
+app.get('/my-events/:email', async(request, response)=>{
+    const { email } = request.params;
+    const result = await eventBookingCollection.find({email:email}).toArray();
 
     response.send(result);
 });

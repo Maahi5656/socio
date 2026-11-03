@@ -14,7 +14,7 @@ import { IEvent } from '@/lib/types/event'
 
 const Events = async() => {
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/event`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events`, {
         cache: 'no-cache'
     })
     const events: IEvent[] = await response.json();
@@ -44,7 +44,7 @@ const Events = async() => {
                                               }
                                             </CardDescription>
                                             <CardDescription>
-                                                <Button className="w-full">View Event</Button>
+                                                <Link href={`/events/${event._id}`} className="block text-white text-center py-1.5 my-1 bg-[#000] w-full rounded">View Event</Link>
                                             </CardDescription>
                                         </CardHeader>
                                     </Card>                                     
