@@ -29,12 +29,12 @@ const Events = async() => {
             </section>
             <section className='relative top-[76px] py-[45px]'>
                 <div className='relative max-w-7xl mx-auto'>
-                    <div className='flex flex-row gap-3.5'>
+                    <div className='grid grid-cols-6 gap-4'>
                         {
                             events ? events.map((event)=>{
                                 return (
                                     <Card key={event._id} className="relative mx-auto w-full max-w-full pt-0">
-                                      <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
+                                        <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
                                         <img src={event.event_image} alt={event.event_title} className="relative z-20 aspect-video w-full object-cover brightness-60 grayscale dark:brightness-40"/>
                                         <CardHeader>
                                             <CardTitle>{ event.event_title }</CardTitle>

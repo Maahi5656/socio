@@ -35,7 +35,6 @@ const CreateEvent = async() => {
                     <p className="font-medium text-[#636467] text-[14px] mb-0.5">Share An Event To Help Our Community</p> 
                     <br />
                     <EventForm user={user} />
-                    
                 </div>
             </div>
         </section>

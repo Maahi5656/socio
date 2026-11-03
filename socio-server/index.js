@@ -55,6 +55,13 @@ app.post('/add-event', async(request, response)=>{
     response.send(result);
 });
 
+app.get('/manage-event/:email', async(request, response)=>{
+    const { email } = request.params;
+    const result = await eventsCollection.find({event_organizer_email: email}).toArray();
+
+    response.send(result);
+});
+
 app.listen(PORT,()=>{
     console.log(`Server is running at port: ${PORT}`)
 })

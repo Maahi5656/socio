@@ -89,17 +89,18 @@ const EventForm = ({user}:{user?:IUser}) => {
 
     return (
         <div>
-            <form onSubmit={handleSubmitForm} className="max-w-sm">
+            <form onSubmit={handleSubmitForm} className="max-w-lg">
                 <FieldGroup>
+                    <Field>
+                        <Input 
+                            id="form-event-organizer-email"
+                            type="hidden"
+                            value={form.event_organizer_email}
+                            onChange={(e)=>update("event_organizer_email", e.target.value)}
+                            readOnly
+                        />    
+                    </Field>
                     <div className="grid grid-cols-2 gap-4">
-                        <Field>
-                            <Input 
-                                id="form-event-organizer-email"
-                                type="hidden"
-                                value={form.event_organizer_email}
-                                onChange={(e)=>update("event_organizer_email", e.target.value)}
-                            />    
-                        </Field>
                         <Field>
                             <FieldLabel htmlFor="form-event-name">Event Title</FieldLabel>
                             <Input
@@ -160,6 +161,38 @@ const EventForm = ({user}:{user?:IUser}) => {
                         <Field>
                             <FieldLabel htmlFor="form-image-url">Event Date</FieldLabel>
                             <Popover>
+                              <PopoverTrigger>
+                                <Button
+                                  variant="outline"
+                                  data-empty={!form.event_date}
+                                  className="w-full justify-between text-left font-normal"
+                                >
+                                  {form.event_date
+                                    ? format(new Date(form.event_date), "PPP")
+                                    : <span>Pick a date</span>}
+                            
+                                  <ChevronDownIcon className="ml-2 h-4 w-4" />
+                                </Button>
+                              </PopoverTrigger>
+                                    
+                              <PopoverContent className="w-auto p-0" align="start">
+                                <Calendar
+                                  mode="single"
+                                  selected={
+                                    form.event_date
+                                      ? new Date(form.event_date)
+                                      : undefined
+                                  }
+                                  onSelect={(selectedDate) => {
+                                    update(
+                                      "event_date",
+                                      selectedDate ? selectedDate.toISOString() : ""
+                                    );
+                                  }}
+                                />
+                              </PopoverContent>
+                            </Popover>
+                            {/* <Popover>
                               <PopoverTrigger render={<Button variant={"outline"} data-empty={!date} className="w-[212px] justify-between text-left font-normal data-[empty=true]:text-muted-foreground">{date ? format(date, "PPP") : <span>Pick a date</span>}<ChevronDownIcon data-icon="inline-end" /></Button>} />
                               <PopoverContent className="w-auto p-0" align="start">
                                 <Calendar
@@ -169,7 +202,7 @@ const EventForm = ({user}:{user?:IUser}) => {
                                   defaultMonth={date}
                                 />
                               </PopoverContent>
-                            </Popover>
+                            </Popover> */}
                         </Field>
                     </div>
                     <div className="grid grid-cols-1">
