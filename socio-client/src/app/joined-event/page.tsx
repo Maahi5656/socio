@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
 
@@ -11,6 +13,8 @@ import {
 
 import { getTokenFromServer } from '@/lib/getTokenFromServer';
 import { IEvent } from '@/lib/types/event'
+
+import connect from '../../../public/images/connect.jpg'
 
 const JoinedEvent = async() => {
 
@@ -31,32 +35,45 @@ const JoinedEvent = async() => {
                 <h2 className="font-bold text-2xl text-[#636467] mb-0.5">Joined Events</h2>
                 <p className="font-medium text-[#636467] text-[14px] mb-0.5">Stay Connected and Keep Supporting Your Community</p>
                 <br />
-                <div className="flex w-full flex-col gap-6">
+                <div className='grid grid-cols-2 gap-4'>
+                    <div className="flex w-full flex-col gap-6">
+                        {
+                            joinedEvents.length > 0 ? joinedEvents.map((event)=>{
+                                return (
+                                    <Item key={event._id} variant="outline">
+                                        <ItemMedia variant="icon">
+                                        </ItemMedia>
+                                        <ItemContent>
+                                            <div className='flex flex-row items-center w-full gap-3.5'>
+                                                <div>
+                                                    <Image className='rounded' src={event.event_image} alt='plantation' width={250} height={150} />
+                                                </div>
+                                                <div>
+                                                    <ItemTitle>{ event.event_title }</ItemTitle>
+                                                    <ItemTitle>{ event.event_location }</ItemTitle>
+                                                    <ItemTitle>{ event.event_date }</ItemTitle>
+                                                </div>
+                                                <div className='text-right'>
+                                                    <span className='bg-[#ACEDBE] text-green-700 py-2 px-3 rounded-2xl'>Joined</span>
+                                                </div>
+                                            </div>
+                                        </ItemContent>
+                                    </Item>                                
+                                )
+                            }) : <>
+                                <p>No Events Joined!</p>
+                            </>
+                        }
+                    </div> 
+                    <div>
                     {
-                        joinedEvents.map((event)=>{
-                            return (
-                                <Item key={event._id} variant="outline">
-                                    <ItemMedia variant="icon">
-                                    </ItemMedia>
-                                    <ItemContent>
-                                        <ItemTitle>Default Size</ItemTitle>
-                                        <ItemDescription>
-                                          The standard size for most use cases.
-                                        </ItemDescription>
-                                    </ItemContent>
-                                </Item>                                
-                            )
-                        })
+                        joinedEvents.length > 0 && (
+                            <Image src={connect} alt="Connect" width={450} height={450} />
+                        )
                     }
-                    <Item variant="outline" size="xs">
-                        <ItemMedia variant="icon">
-                        </ItemMedia>
-                        <ItemContent>
-                          <ItemTitle>Extra Small Size</ItemTitle>
-                          <ItemDescription>The most compact size available.</ItemDescription>
-                        </ItemContent>
-                    </Item>
-                </div>
+                    </div>               
+                </div>  
+
             </div>
         </section>
     );

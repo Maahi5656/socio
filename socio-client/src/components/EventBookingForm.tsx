@@ -7,6 +7,7 @@ import { toast } from "@/components/ui/toast"
 import { authClient } from "@/lib/auth-client"
 import { IEvent } from '@/lib/types/event'
 
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 const EventBookingForm = ({event}:{event: IEvent}) => {
 
@@ -35,10 +36,13 @@ const EventBookingForm = ({event}:{event: IEvent}) => {
             event_booking_date: new Date()
         }
 
+        const token = await getTokenFromClient();
+
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/join-event`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
+                authorizaton: `Bearer ${token}`
             },
             body: JSON.stringify(data)
         })

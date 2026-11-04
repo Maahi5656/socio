@@ -35,7 +35,7 @@ const ManageEvent = async() => {
                 <br />
                 <div className="flex w-full flex-col gap-6">
                     {
-                        events.map((event: IEvent)=>{
+                        events.length > 0 ? events.map((event: IEvent)=>{
                             return (
                                 <Item variant="outline" key={event._id}>
                                     <ItemMedia variant="icon">
@@ -66,7 +66,9 @@ const ManageEvent = async() => {
                                     </ItemContent>
                                 </Item>
                             )
-                        })
+                        }) : <>
+                            <p>No Events Available...</p>
+                        </>
                     }
                 </div>
             </div>

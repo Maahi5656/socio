@@ -77,7 +77,8 @@ const EditEventDialog = ({event}:{event:IEvent}) => {
 
         try{
             const { _id, ...formData } = form;
-
+            const token = await getTokenFromClient();
+            
             const updateData = {
                 ...formData
             };
@@ -86,6 +87,7 @@ const EditEventDialog = ({event}:{event:IEvent}) => {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
+                    authorization: `Bearer ${token}`
                 },
                 body: JSON.stringify(updateData)
             });

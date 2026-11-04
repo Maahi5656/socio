@@ -4,12 +4,27 @@ import { notFound } from "next/navigation";
 
 import { IEvent } from '@/lib/types/event'
 import EventBookingForm from "@/components/EventBookingForm";
+import { auth } from "@/lib/auth"
+import { headers } from "next/headers";
+import { getTokenFromServer } from "@/lib/getTokenFromServer";
 
+function formatDate(value:string){
+    const [year, month, day] = value.split("-");
+    return `${month}/${day}/${year}`
+}
 
 const EventDetailsPage = async({ params }: { params: Promise<{ id: string }> }) => {
     
     const { id } = await params;
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/event/${id}`);
+
+    // get token from cookies
+    const token = await getTokenFromServer();
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/event/${id}`,{
+        headers: {
+            authorization: `Bearer ${token}`
+        },
+    });
 
     if(!response.ok){
         notFound();

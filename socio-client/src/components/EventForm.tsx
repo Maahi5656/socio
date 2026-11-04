@@ -33,6 +33,8 @@ import {
 
 import { Textarea } from "@/components/ui/textarea"
 
+import { authClient } from "@/lib/auth-client";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 import { IUser } from "@/lib/types/user"
 
 const items = [
@@ -74,10 +76,14 @@ const EventForm = ({user}:{user?:IUser}) => {
     const handleSubmitForm=async(e: React.SubmitEvent<HTMLFormElement>)=>{
         e.preventDefault();
 
+        // assign token from client
+        const token = await getTokenFromClient();
+
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/add-event`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              authorization: `Bearer ${token}`
             },
             body: JSON.stringify(form)
         });

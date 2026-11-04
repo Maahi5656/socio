@@ -1,8 +1,8 @@
 import { MongoClient, ObjectId } from 'mongodb';
-import express, { response } from 'express'
+import express, { request, response } from 'express'
 import cors from 'cors'
 import 'dotenv/config'
-
+import { createRemoteJWKSet, jwtVerify } from 'jose';
 
 const app = express();
 const PORT = 8000
@@ -27,6 +27,32 @@ const db = mongoClient.db("socio");
 const eventsCollection = db.collection("events");
 const eventBookingCollection = db.collection("bookings");
 
+const verifyToken = async(request, response, next)=>{
+    
+    const authHeader = request.headers.authorization
+    
+    if(!authHeader){
+        return response.status(401).send({message: 'Unauthorized'});
+    }
+
+    const token = authHeader.split(" ")[1]
+
+    if(!token){
+        return response.status(401).send({message: 'Unauthorized'});
+    }
+
+    // Verify Token
+    const JWKS = createRemoteJWKSet(new URL(`${process.env.CLIENT_URL}/api/auth/jwks`))
+
+    try{
+        const { payload } = await jwtVerify(token, JWKS);
+        next();
+    }catch(error){
+        return response.status(500).send({message: "Server Error"});
+    }
+
+}
+
 app.get('/', (request,response)=>{
     response.send({message: 'Server is running fine!'})
 });
@@ -46,7 +72,7 @@ app.get('/event/:id', async(request, response)=>{
     response.send(result);
 });
 
-app.patch('/event/:id', async(request, response)=>{
+app.patch('/event/:id', verifyToken, async(request, response)=>{
     const {id} = request.params;   
     const updatedData = request.body;
     const result = await eventsCollection.updateOne(
@@ -60,7 +86,7 @@ app.patch('/event/:id', async(request, response)=>{
     });
 });
 
-app.delete('/event/:id', async(request,response)=>{
+app.delete('/event/:id', verifyToken, async(request,response)=>{
     const {id} = request.params;
     const result = eventsCollection.deleteOne({_id: new ObjectId(id)})
 
@@ -70,7 +96,7 @@ app.delete('/event/:id', async(request,response)=>{
     });    
 })
 
-app.post('/add-event', async(request, response)=>{
+app.post('/add-event', verifyToken, async(request, response)=>{
     const data = request.body;
     const result = await eventsCollection.insertOne(data);  
 
@@ -79,21 +105,21 @@ app.post('/add-event', async(request, response)=>{
     response.send(result);
 });
 
-app.get('/manage-event/:email', async(request, response)=>{
+app.get('/manage-event/:email', verifyToken, async(request, response)=>{
     const { email } = request.params;
     const result = await eventsCollection.find({event_organizer_email: email}).toArray();
 
     response.send(result);
 });
 
-app.post('/join-event', async(request, response)=>{
+app.post('/join-event', verifyToken, async(request, response)=>{
     const data = request.body;
     const result = await eventBookingCollection.insertOne(data);
 
     response.send(result);
 });
 
-app.get('/my-events/:email', async(request, response)=>{
+app.get('/my-events/:email', verifyToken, async(request, response)=>{
     const { email } = request.params;
     const result = await eventBookingCollection.find({email:email}).toArray();
 
