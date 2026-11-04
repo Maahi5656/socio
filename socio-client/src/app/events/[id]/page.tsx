@@ -9,7 +9,7 @@ import EventBookingForm from "@/components/EventBookingForm";
 const EventDetailsPage = async({ params }: { params: Promise<{ id: string }> }) => {
     
     const { id } = await params;
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/${id}`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/event/${id}`);
 
     if(!response.ok){
         notFound();

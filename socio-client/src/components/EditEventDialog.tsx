@@ -42,7 +42,7 @@ import { format } from "date-fns"
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
+import { toast } from "@/components/ui/toast"
 
 import { IEvent } from '@/lib/types/event'
 import { getTokenFromClient } from "@/lib/getTokenFromClient";
@@ -63,6 +63,7 @@ const EditEventDialog = ({event}:{event:IEvent}) => {
     const router = useRouter();
 
     const [form, setForm] = useState(event);
+    const [openModal, setOpenModal] = useState(false);
 
     const update=(field: keyof typeof form, value: string | null)=>{
         setForm((current)=>({
@@ -97,8 +98,13 @@ const EditEventDialog = ({event}:{event:IEvent}) => {
                     result?.message || `Update failed: ${response.status}`
                 );
             }    
+            toast.add({
+                type: "success",
+                description: result?.message,
+                priority: "high"
+            })
 
-            toast.success(result?.message);
+            setOpenModal(false);
             // Refresh the server-rendered destination details.
             router.refresh();
         }catch(error){
@@ -108,9 +114,9 @@ const EditEventDialog = ({event}:{event:IEvent}) => {
 
     return (
         <>
-            <Dialog>
+            <Dialog open={openModal} onOpenChange={setOpenModal}>
                 <DialogTrigger>
-                    <Button variant="outline">
+                    <Button className="text-[18px] font-semibold bg-blue-600 text-white py-2 px-4 mx-1.5 cursor-pointer rounded" variant="outline">
                         <Pencil />
                         Edit
                     </Button>
@@ -221,17 +227,6 @@ const EditEventDialog = ({event}:{event:IEvent}) => {
                                         />
                                       </PopoverContent>
                                     </Popover>
-                                    {/* <Popover>
-                                      <PopoverTrigger render={<Button variant={"outline"} data-empty={!date} className="w-[212px] justify-between text-left font-normal data-[empty=true]:text-muted-foreground">{date ? format(date, "PPP") : <span>Pick a date</span>}<ChevronDownIcon data-icon="inline-end" /></Button>} />
-                                      <PopoverContent className="w-auto p-0" align="start">
-                                        <Calendar
-                                          mode="single"
-                                          selected={form.event_date ? new Date(form.event_date) : undefined}
-                                          onSelect={(date)=>update("event_date", date ? date.toISOString() : "")}
-                                          defaultMonth={date}
-                                        />
-                                      </PopoverContent>
-                                    </Popover> */}
                                 </Field>
                             </div>
                             <div className="grid grid-cols-1">

@@ -1,10 +1,12 @@
 "use client"
 
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
 import { toast } from "@/components/ui/toast"
 import { authClient } from "@/lib/auth-client"
 import { IEvent } from '@/lib/types/event'
+
 
 const EventBookingForm = ({event}:{event: IEvent}) => {
 
@@ -15,6 +17,10 @@ const EventBookingForm = ({event}:{event: IEvent}) => {
 
     const handleEventBooking=async(e:React.SubmitEvent<HTMLElement>)=>{
         e.preventDefault();
+
+        if(!user){
+            redirect('/login');
+        }
 
         const data = {
             username: user?.name,

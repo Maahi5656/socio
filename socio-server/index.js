@@ -31,14 +31,13 @@ app.get('/', (request,response)=>{
     response.send({message: 'Server is running fine!'})
 });
 
-app.get('/events/', async(request, response)=>{
-    // const { email } = request.params
+app.get('/events', async(request, response)=>{
     const result = await eventsCollection.find().toArray();
     
     response.send(result);
 });
 
-app.get('/events/:id', async(request, response)=>{
+app.get('/event/:id', async(request, response)=>{
     const { id } = request.params;
     const result = await eventsCollection.findOne({_id: new ObjectId(id)});
 
@@ -59,6 +58,16 @@ app.patch('/event/:id', async(request, response)=>{
         message: "Event Updated Successfully",
         result
     });
+});
+
+app.delete('/event/:id', async(request,response)=>{
+    const {id} = request.params;
+    const result = eventsCollection.deleteOne({_id: new ObjectId(id)})
+
+    response.json({
+        message: "Event Deleted Successfully",    
+        result
+    });    
 })
 
 app.post('/add-event', async(request, response)=>{

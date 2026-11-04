@@ -13,6 +13,9 @@ import {
 
 import { IEvent } from '@/lib/types/event'
 
+import EditEventDialog from '@/components/EditEventDialog';
+import DeleteEventDialog from '@/components/DeleteEventDialog';
+
 const ManageEvent = async() => {
 
     const session = await auth.api.getSession({
@@ -50,8 +53,10 @@ const ManageEvent = async() => {
                                                 </div>
                                             </div>
                                             <div className='text-right'>
-                                                <button className='text-[18px] font-semibold bg-blue-600 text-white py-2 px-4 mx-1.5 cursor-pointer rounded'>Update</button>
-                                                <button className='text-[18px] font-semibold bg-red-600 text-white py-2 px-4 mx-1.5 cursor-pointer rounded'>Delete</button>
+                                                <EditEventDialog event={event} />
+                                                <DeleteEventDialog id={event._id} />
+                                                {/* <button className='text-[18px] font-semibold bg-blue-600 text-white py-2 px-4 mx-1.5 cursor-pointer rounded'>Update</button> */}
+                                                {/* <button >Delete</button> */}
                                             </div>
                                         </div>
                                         {/* <ItemTitle>Default Size</ItemTitle>

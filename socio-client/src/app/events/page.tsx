@@ -27,75 +27,37 @@ const Events = async() => {
                     <p className='font-bold text-[#D1DCD5] text-[20px] mb-4'>Join upcoming community events near you</p>
                 </div>
             </section>
-            <section className='relative top-[76px] py-[45px]'>
+            <section className='relative top-[76px] h-[calc(100vh-401px)] py-[45px]'>
                 <div className='relative max-w-7xl mx-auto'>
-                    <div className='grid grid-cols-6 gap-4'>
-                        {
-                            events ? events.map((event)=>{
-                                return (
-                                    <Card key={event._id} className="relative mx-auto w-full max-w-full pt-0">
-                                        <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
-                                        <img src={event.event_image} alt={event.event_title} className="relative z-20 aspect-video w-full object-cover brightness-60 grayscale dark:brightness-40"/>
-                                        <CardHeader>
-                                            <CardTitle>{ event.event_title }</CardTitle>
-                                            <CardDescription>
-                                              {
-                                                event.event_description
-                                              }
-                                            </CardDescription>
-                                            <CardDescription>
-                                                <Link href={`/events/${event._id}`} className="block text-white text-center py-1.5 my-1 bg-[#000] w-full rounded">View Event</Link>
-                                            </CardDescription>
-                                        </CardHeader>
-                                    </Card>                                     
-                                )
-                            })  : <>
-                                <p>No Events Found</p>
-                            </>
-                        }
-                        {/* <Card className="relative mx-auto w-full max-w-full pt-0">
-                          <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
-                            <img src="https://avatar.vercel.sh/shadcn1" alt="Event cover" className="relative z-20 aspect-video w-full object-cover brightness-60 grayscale dark:brightness-40"/>
-                            <CardHeader>
-                                <CardTitle>Design systems meetup</CardTitle>
-                                <CardDescription>
-                                  A practical talk on component APIs, accessibility, and shipping
-                                  faster.
-                                </CardDescription>
-                                <CardDescription>
-                                    <Button className="w-full">View Event</Button>
-                                </CardDescription>
-                            </CardHeader>
-                        </Card>     */}
-                        {/* <Card className="relative mx-auto w-full max-w-full pt-0">
-                          <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
-                            <img src="https://avatar.vercel.sh/shadcn1" alt="Event cover" className="relative z-20 aspect-video w-full object-cover brightness-60 grayscale dark:brightness-40"/>
-                            <CardHeader>
-                                <CardTitle>Design systems meetup</CardTitle>
-                                <CardDescription>
-                                  A practical talk on component APIs, accessibility, and shipping
-                                  faster.
-                                </CardDescription>
-                                <CardDescription>
-                                    <Button className="w-full">View Event</Button>
-                                </CardDescription>
-                            </CardHeader>
-                        </Card> */}
-                        {/* <Card className="relative mx-auto w-full max-w-full pt-0">
-                          <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
-                            <img src="https://avatar.vercel.sh/shadcn1" alt="Event cover" className="relative z-20 aspect-video w-full object-cover brightness-60 grayscale dark:brightness-40"/>
-                            <CardHeader>
-                                <CardTitle>Design systems meetup</CardTitle>
-                                <CardDescription>
-                                  A practical talk on component APIs, accessibility, and shipping
-                                  faster.
-                                </CardDescription>
-                                <CardDescription>
-                                    <Button className="w-full">View Event</Button>
-                                </CardDescription>
-                            </CardHeader>
-                        </Card>                    */}
-                    </div>
+                    {  
+                        events?.length > 0 ? events.map((event)=>{
+                            
+                            return (
+                                <>
+                                    <div className='grid grid-cols-6 gap-4'>
+                                        <Card key={event._id} className="relative mx-auto w-full max-w-full pt-0">
+                                            <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
+                                            <img src={event.event_image} alt={event.event_title} className="relative z-20 aspect-video w-full object-cover brightness-60 grayscale dark:brightness-40"/>
+                                            <CardHeader>
+                                                <CardTitle>{ event.event_title }</CardTitle>
+                                                <CardDescription>
+                                                  {
+                                                    event.event_description
+                                                  }
+                                                </CardDescription>
+                                                <CardDescription>
+                                                    <Link href={`/events/${event._id}`} className="block text-white text-center py-1.5 my-1 bg-[#000] w-full rounded">View Event</Link>
+                                                </CardDescription>
+                                            </CardHeader>
+                                        </Card> 
+                                    </div>    
+                                </>                                
+                            )
+                        })  : <>
+                            <p>No Events Yet. Will Be Organized Soon!</p>
+                            <b>Stay Tuned</b>
+                        </>   
+                    }
                 </div>
             </section>        
         </>
