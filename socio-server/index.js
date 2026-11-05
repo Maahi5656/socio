@@ -126,6 +126,16 @@ app.get('/my-events/:email', verifyToken, async(request, response)=>{
     response.send(result);
 });
 
+app.delete('/my-events/:id', verifyToken, async(request, response)=>{
+    const {id} = request.params;
+    const result = await eventBookingCollection.deleteOne({_id: new ObjectId(id)});
+
+    response.json({
+        message: "Booked Event Deleted Successfully",    
+        result
+    });
+});
+
 app.listen(PORT,()=>{
     console.log(`Server is running at port: ${PORT}`)
 })

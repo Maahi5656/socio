@@ -7,7 +7,7 @@ import { IEvent } from '@/lib/types/event'
 
 import EventForm from "@/components/EventForm";
 
-import { IUser } from "@/lib/types/user"
+// import { IUser } from "@/lib/types/user"
 
 import login from '../../../public/images/login-image.png'
 
@@ -28,7 +28,7 @@ const CreateEvent = async() => {
 
     return (
         <section className='relative h-[calc(100vh-192px)] top-[76px] py-[50px]'>
-            <div className='relative flex justify-start items-start gap-5 max-w-7xl mx-auto'>
+            <div className='relative flex justify-start items-start gap-5 max-w-7xl mx-auto md:px-4 sm:px-3'>
                 <Image className="w-full rounded" width={450} src={login} alt="image" />
                 <div className="w-full">
                     <h2 className="font-bold text-2xl text-[#636467] mb-0.5">Create A New Event</h2>

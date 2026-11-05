@@ -38,8 +38,9 @@ const Events = async() => {
                                 threeLatestEvents.map((event) => (
                                 <Card key={event._id} className="relative mx-auto w-full max-w-full pt-0 overflow-hidden">
                                   <div className="relative">
-                                    <div className="absolute inset-0 z-10 bg-black/35" />
-                                        <img src={event.event_image} alt={event.event_title} className="aspect-video w-full object-cover brightness-60 grayscale dark:brightness-40" />
+                                    <div className="absolute inset-0 z-10" />
+                                        <img src={event.event_image} alt={event.event_title} className="aspect-video w-full object-cover" />
+                                        {/* <div className="brightness-60 grayscale dark:brightness-40"></div> */}
                                     </div>
                                     <CardHeader>
                                         <CardTitle>
@@ -49,7 +50,7 @@ const Events = async() => {
                                           {event.event_description}
                                         </CardDescription>
                                         <CardDescription>
-                                          <Link href={`/event/${event._id}`} className="block text-white text-center py-1.5 my-1 bg-black w-full rounded">
+                                          <Link href={`/event/${event._id}`} className="block text-white text-center py-1.5 my-1 bg-[#019241] w-full rounded">
                                             View Event
                                           </Link>
                                         </CardDescription>

@@ -11,6 +11,8 @@ import {
   ItemTitle,
 } from "@/components/ui/item"
 
+import { getTokenFromServer } from '@/lib/getTokenFromServer';
+
 import { IEvent } from '@/lib/types/event'
 
 import EditEventDialog from '@/components/EditEventDialog';
@@ -24,12 +26,19 @@ const ManageEvent = async() => {
 
     const user = session?.user;
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/manage-event/${user?.email}`);
+    const token = await getTokenFromServer();
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/manage-event/${user?.email}`,{
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    });
     const events: IEvent[] = await response.json();
 
+    console.log("Events", events)
+
     return (
-        <section className='relative h-[calc(100vh-192px)] top-[76px] py-[50px]'>
-            <div className='relative max-w-7xl mx-auto'>
+        <section className={`relative top-[76px] py-[50px] ${events?.length === 0 ? "h-[calc(100vh-192px)]" : ""}`}>
+            <div className='relative max-w-7xl mx-auto md:px-4 sm:px-3'>
                 <h2 className="font-bold text-2xl text-[#636467] mb-0.5">Manage Your Events</h2>
                 <p className="font-medium text-[#636467] text-[14px] mb-0.5">Update or Delete The Event You Created</p>
                 <br />

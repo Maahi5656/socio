@@ -8,7 +8,7 @@ import logo from '../../public/images/logo.png'
 const Footer = () => {
     return (
         <footer className='relative top-[76px] bg-[#103123] py-2.5 w-full'>
-            <div className='relative flex justify-between gap-5 max-w-7xl mx-auto'>
+            <div className='relative flex flex-col lg:flex-row justify-between gap-5 max-w-7xl mx-auto px-4'>
                 <div>
                     <div className="flex items-center">
                         <Image src={logo} className="w-12 h-10 pr-1.5" alt="Community-Connect" />

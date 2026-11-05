@@ -1,0 +1,61 @@
+.mobile-menu{
+  display: none;
+}
+
+.mobile-menu{
+  display: none;
+}
+
+.mobile-menu span{
+  color: #fff;
+  font-size: 30px;
+}
+
+.overlay{
+  width: 0;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,0.9);
+  z-index: 1;
+  overflow-x: hidden;
+  transition: 0.5s;
+}
+
+.overlay-content{
+  position: relative;
+  top: 25%;
+  text-align: center;
+}
+
+.overlay-content a{
+  text-decoration: none;
+  display: block;
+  font-size: 25px;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  padding: 15px 0;
+  transition: 0.5s;
+}
+
+a.closebtn{
+  position: absolute;
+  top: 50px;
+  right: 45px;
+  font-size: 45px !important;
+  color: #fff !important;
+}
+
+
+@media (max-width: 991px){
+
+   .navbar ul{
+    display: none;
+   }
+
+   .mobile-menu{
+     display: block;
+   }
+}

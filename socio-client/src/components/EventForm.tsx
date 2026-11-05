@@ -22,8 +22,10 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Calendar } from "@/components/ui/calendar"
+import { toast } from "@/components/ui/toast"
 import { ChevronDownIcon } from "lucide-react"
 import { format } from "date-fns"
+import { redirect } from "next/navigation";
 
 import {
   Popover,
@@ -89,6 +91,16 @@ const EventForm = ({user}:{user?:IUser}) => {
         });
 
         const result = await response.json();
+
+        if(result){
+          toast.add({
+              type: "success",
+              description: "You Have Registered Successfully",
+              priority: "high"
+          })
+        
+          redirect('/create-event');          
+        }
 
         console.log(result);
     }
@@ -210,11 +222,11 @@ const EventForm = ({user}:{user?:IUser}) => {
                 </Field>
             </div>
             <div className="grid grid-cols-1">
-                <FieldLabel htmlFor="textarea-message">Event Description</FieldLabel>
-                <Textarea id="textarea-message" value={form.event_description} onChange={(e)=>update("event_description", e.target.value)} placeholder="Type your message here." />
+              <FieldLabel htmlFor="textarea-message">Event Description</FieldLabel>
+              <Textarea id="textarea-message" value={form.event_description} onChange={(e)=>update("event_description", e.target.value)} placeholder="Type your message here." />
             </div>
             <div className="grid grid-cols-1">
-                <Button className="w-full" type="submit">Create Event</Button>
+              <Button className="w-full" type="submit">Create Event</Button>
             </div>
           </FieldGroup>
         </form>            

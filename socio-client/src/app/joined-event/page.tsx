@@ -14,6 +14,8 @@ import {
 import { getTokenFromServer } from '@/lib/getTokenFromServer';
 import { IEvent } from '@/lib/types/event'
 
+import DeleteBookedEventDialog from '@/components/DeleteBookedEventDialog';
+
 import connect from '../../../public/images/connect.jpg'
 
 const JoinedEvent = async() => {
@@ -25,13 +27,17 @@ const JoinedEvent = async() => {
     const user = session?.user;
 
     const token = await getTokenFromServer();
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/my-events/${user?.email}`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/my-events/${user?.email}`,{
+        headers: {
+            authorization: `Bearer ${token}`
+        }        
+    });
 
     const joinedEvents: IEvent[] = await response.json(); 
 
     return (
-        <section className='relative h-[calc(100vh-192px)] top-[76px] py-[50px]'>
-            <div className='relative max-w-7xl mx-auto'>
+        <section className={`relative top-[76px] py-[50px] ${joinedEvents?.length === 0 ? "h-[calc(100vh-192px)]" : ""}`}>
+            <div className='relative max-w-7xl mx-auto md:px-4 sm:px-3'>
                 <h2 className="font-bold text-2xl text-[#636467] mb-0.5">Joined Events</h2>
                 <p className="font-medium text-[#636467] text-[14px] mb-0.5">Stay Connected and Keep Supporting Your Community</p>
                 <br />
@@ -55,6 +61,7 @@ const JoinedEvent = async() => {
                                                 </div>
                                                 <div className='text-right'>
                                                     <span className='bg-[#ACEDBE] text-green-700 py-2 px-3 rounded-2xl'>Joined</span>
+                                                    <DeleteBookedEventDialog id={event._id} />
                                                 </div>
                                             </div>
                                         </ItemContent>

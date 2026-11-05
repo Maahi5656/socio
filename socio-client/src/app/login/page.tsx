@@ -47,7 +47,7 @@ const Login = () => {
       if(error){
         toast.add({
           type: "error",
-          description: `${error}`,
+          description: "Login Unsuccessful! Please Check Your Email & Password",
           priority: "high"
         })
       }
@@ -55,8 +55,8 @@ const Login = () => {
     }
 
     return (
-        <section className='relative h-[calc(100vh-192px)] top-[76px] py-[50px]'>
-            <div className='relative flex justify-start items-start gap-5 max-w-7xl mx-auto'>
+        <section className='relative top-[76px] py-[50px]'>
+            <div className='relative flex flex-col lg:flex-row justify-start items-start gap-5 max-w-7xl mx-auto px-4'>
                 <Image className="w-full rounded" width={450} src={login} alt="image" />
                 <div className="w-full">
                     <form onSubmit={handleLoginForm} className="max-w-sm">

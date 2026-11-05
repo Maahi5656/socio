@@ -8,7 +8,7 @@ import society from '../../../public/images/society.png'
 const Brief = () => {
     return (
         <section className='relative top-[76px] py-[45px]'>
-            <div className='relative flex gap-2.5 justify-between max-w-7xl mx-auto'>
+            <div className='relative flex gap-2.5 justify-between max-w-7xl mx-auto md:px-4 sm:px-3'>
                 <div className="flex items-center gap-1.5">
                     <Image className="rounded-full" width={86} height={80} src={community} alt="" />
                     <h2>
