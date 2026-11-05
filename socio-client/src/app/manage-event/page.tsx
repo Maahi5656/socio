@@ -68,10 +68,6 @@ const ManageEvent = async() => {
                                                 {/* <button >Delete</button> */}
                                             </div>
                                         </div>
-                                        {/* <ItemTitle>Default Size</ItemTitle>
-                                        <ItemDescription>
-                                          The standard size for most use cases.
-                                        </ItemDescription> */}
                                     </ItemContent>
                                 </Item>
                             )

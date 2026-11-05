@@ -1,13 +1,6 @@
 "use client"
 
 import { 
-    ArrowLeft, 
-    ArrowRight, 
-    CalendarDays, 
-    Check, 
-    MapPin, 
-    Star, 
-    Pencil, 
     Trash2 
 } from "lucide-react";
 

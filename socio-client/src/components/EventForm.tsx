@@ -208,17 +208,6 @@ const EventForm = ({user}:{user?:IUser}) => {
                         />
                       </PopoverContent>
                     </Popover>
-                    {/* <Popover>
-                      <PopoverTrigger render={<Button variant={"outline"} data-empty={!date} className="w-[212px] justify-between text-left font-normal data-[empty=true]:text-muted-foreground">{date ? format(date, "PPP") : <span>Pick a date</span>}<ChevronDownIcon data-icon="inline-end" /></Button>} />
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={form.event_date ? new Date(form.event_date) : undefined}
-                          onSelect={(date)=>update("event_date", date ? date.toISOString() : "")}
-                          defaultMonth={date}
-                        />
-                      </PopoverContent>
-                    </Popover> */}
                 </Field>
             </div>
             <div className="grid grid-cols-1">

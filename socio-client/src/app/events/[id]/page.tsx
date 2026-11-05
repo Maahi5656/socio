@@ -1,5 +1,3 @@
-import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { IEvent } from '@/lib/types/event'
@@ -32,8 +30,6 @@ const EventDetailsPage = async({ params }: { params: Promise<{ id: string }> }) 
 
     const event: IEvent = await response.json();
 
-    // console.log("Event", event);
-    
     return (
         <section className='relative h-[calc(100vh-192px)] top-[76px] py-[50px]'>
             <EventBookingForm event={event} />

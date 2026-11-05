@@ -8,19 +8,10 @@ import {
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { toast } from "@/components/ui/toast"
 
 import Image from "next/image";
 import Link from "next/link";
-
 
 import { redirect } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
@@ -35,7 +26,6 @@ const Login = () => {
       const formData = new FormData(e.target);
       const user = Object.fromEntries(formData.entries()) as {email:string, password:string};
       
-      // console.log(user);
       const { data, error } = await authClient.signIn.email({
         ...user
       });
